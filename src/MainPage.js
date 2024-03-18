@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import myImage from './Images/Exclamation.png';
 import usr1 from './Images/usr-1.png';
@@ -8,6 +8,7 @@ import SelectInput from './SelectInput';
 import Todo from './Images/Todo.png';
 import defaultStatusIcon from './Images/clipboard.png';
 import DoneIcon from './Images/Done.png';
+import displayIcon from './Images/display.png';
 
 const statusImages = {
   "Todo": Todo,
@@ -56,15 +57,6 @@ const Card = ({ obj, showPrioirty = true, showUserIcon = true }) => (
     </div>
   </div>
 );
-
-// const sortTickets = ({ tickets, selectedOrder }) => {
-//   console.log("tickets32", tickets)
-//   if (selectedOrder === 'priority') {
-//     return tickets.sort((a, b) => a.priority - b.priority);
-//   } else if (selectedOrder === 'title') {
-//     return tickets.sort((a, b) => a.title.localeCompare(b.title));
-//   }
-// };
 
 const ByUserUi = ({ user, tasks, selectedOrder }) => {
   const tickets = tasks.tickets.filter(ticket => ticket.userId === user.id);
@@ -176,9 +168,11 @@ const ByPriorityGroup = ({ selectedOrder, tasks }) => {
 function MainPage() {
   const [tasks, setTasks] = useState();
   const [loader, setLoader] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState('User');
   const [selectedOrder, setSelectedOrder] = useState('Priority');
-
+  const uiRef = useRef(null);
+  const buttonRef = useRef(null);
   useEffect(() => {
     const storedGroup = localStorage.getItem('selectedGroup');
     if (storedGroup) {
@@ -216,6 +210,19 @@ function MainPage() {
     setSelectedOrder(event.target.value);
   };
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (uiRef.current && !uiRef.current.contains(event.target) && !buttonRef.current.contains(event.target)) {
+        setShowModal(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+
   let showUI;
   if (selectedGroup === "User") {
     showUI = <ByUserGroup selectedOrder={selectedOrder} tasks={tasks} />;
@@ -229,8 +236,19 @@ function MainPage() {
   return (
     <div className="">
       <div className="header-container">
-        <SelectInput options={["Status", "User", "Priority"]} value={selectedGroup} onChange={handleGroupChange} />
-        <SelectInput options={orderOptions} value={selectedOrder} onChange={handleOrderChange} />
+        <button ref={buttonRef}
+          onClick={_ => setShowModal(!showModal)} className='display-button' >
+          <img src={displayIcon} alt="" style={{ height: "10px", width: "10px", marginRight: "4px" }} />
+          {"Display"}</button>
+        {
+          showModal ?
+            (
+              <div className='modal box' ref={uiRef}>
+                <div style={{ display: 'flex', gap: '100px', marginBottom: '20px' }}>  <label>{"Grouping"}</label>  <SelectInput options={["Status", "User", "Priority"]} value={selectedGroup} onChange={handleGroupChange} /></div>
+                <div style={{ display: 'flex', gap: '100px' }}>   <label>{"Ordering"}</label>   <SelectInput options={orderOptions} value={selectedOrder} onChange={handleOrderChange} /></div>
+              </div>)
+            : null
+        }
       </div>
       <div className="card-container">
         {!loader ?

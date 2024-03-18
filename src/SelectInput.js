@@ -4,9 +4,9 @@ function SelectInput({ options, value, onChange }) {
 
   return (
     <div>
-      <select value={value} onChange={onChange}>
+      <select value={value} onChange={onChange} className='selectBox'>
         {options.map(option => (
-          < option value={option} > {option}</option>
+          <option value={option} className='dropdownOptions'> {option}</option>
         ))}
       </select>
     </div>
