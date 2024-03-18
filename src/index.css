@@ -11,3 +11,111 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.heading {
+  color: #111111;
+  font-weight: 600;
+  text-align: start;
+  margin-bottom: 20px;
+}
+
+.header-container {
+  width: 100%;
+  height: 30px;
+  background-color: #fff;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 20px;
+  background-color: #f0f2f3;
+}
+
+.card {
+  text-align: left;
+  width: 300px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #ADADAD;
+  column-gap: 10px;
+
+}
+
+.card-heading {
+  font-weight: 500;
+  color: #111111;
+  margin-bottom: 15px;
+}
+
+.card:hover {
+  box-shadow: tomato;
+}
+
+.feature {
+  border: 0.2px solid #edebeb;
+  border-radius: 4px;
+  padding: 2px 4px;
+  width: fit-content;
+  color: dimgray;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  border: 1px solid dimgray;
+  background-color: dimgray;
+}
+
+.image {
+  width: 16px;
+  height: 16px;
+}
+
+.profile {
+  margin-bottom: -6px;
+  margin-right: 5px;
+}
+
+.card-bottom {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.border {
+  border: 0.2px solid #edebeb;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.card-id {
+  color: #6b6969;
+  margin-bottom: 5px;
+  display: flex;
+  width: full;
+  justify-content: space-between;
+}
+
+.listClass {
+  display: flex;
+  gap: 40px;
+  width: 100%;
+}
+
+.card-profile {
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+}
